@@ -592,6 +592,41 @@ video {
     .menu svg { width: 25px; height: 25px; }
     .menu button { font-size: 13px; }
 }
+
+/* =================================
+   SAMSUNG TIZEN TV / CONTROLE REMOTO
+================================= */
+button, input, .group-item, .playlist-item, .progress-wrapper {
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+}
+button:focus, input:focus, .group-item:focus, .playlist-item:focus,
+.progress-wrapper:focus {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+}
+button:focus-visible, input:focus-visible,
+.group-item:focus-visible, .playlist-item:focus-visible,
+.progress-wrapper:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+    box-shadow: 0 0 0 6px rgba(229, 9, 20, .75);
+}
+.group-item:focus, .playlist-item:focus {
+    background: rgba(229, 9, 20, .28);
+    border-left-color: var(--red);
+}
+button { cursor: pointer; }
+@media (min-width: 900px) {
+    .playlist-panel { max-width: 520px; }
+    .playlist-header h2 { font-size: 24px; }
+    .group-item .group-name { font-size: 21px; }
+    .playlist-title { font-size: 19px; }
+    .group-item { padding: 20px; }
+    .playlist-item { padding: 13px; }
+}
+
 </style>
 </head>
 
@@ -604,7 +639,7 @@ video {
     
     <div class="setup-input-group">
         <input type="text" id="playlistInput" placeholder="https://exemplo.com/lista.m3u" autocomplete="off" spellcheck="false">
-        <button id="btnLoad" onclick="submitPlaylist()">Carregar</button>
+        <button id="btnLoad" onclick="submitPlaylist()" tabindex="0">Carregar</button>
     </div>
     
     <div class="error-msg" id="setupError">Não foi possível carregar a lista. Verifique o link e tente novamente.</div>
@@ -618,7 +653,7 @@ video {
     <div class="overlay" id="overlay">
 
         <div class="top">
-            <button class="back" onclick="goBack()">
+            <button class="back" onclick="goBack()" tabindex="0" aria-label="Voltar">
                 <svg viewBox="0 0 24 24" fill="white">
                     <path d="M20 11H7.83l5.59-5.59L12 4l-1.42-1.42L2.17 12l9.24 9.41 1.42-1.42L7.83 13H20z"/>
                 </svg>
@@ -627,7 +662,7 @@ video {
             <div class="episode-title" id="currentTitle">Nenhum vídeo carregado</div>
 
             <div class="top-right">
-                <button class="cast" onclick="castVideo()">
+                <button class="cast" onclick="castVideo()" tabindex="0" aria-label="Transmitir">
                     <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                         <path d="M3 16v5h5"/>
                         <path d="M3 11a10 10 0 0 1 10 10"/>
@@ -636,7 +671,7 @@ video {
                     </svg>
                 </button>
 
-                <button class="fullscreen-button" onclick="fullscreen()" aria-label="Tela cheia">
+                <button class="fullscreen-button" onclick="fullscreen()" aria-label="Tela cheia" tabindex="0">
                     <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                         <path d="M4 9V4h5"/>
                         <path d="M15 4h5v5"/>
@@ -648,7 +683,7 @@ video {
         </div>
 
         <div class="center">
-            <button class="skip" onclick="seek(-10)">
+            <button class="skip" onclick="seek(-10)" tabindex="0" aria-label="Voltar 10 segundos">
                 <svg viewBox="0 0 80 80" fill="none" stroke="white" stroke-width="3">
                     <path d="M25 15 L10 15 L10 30"/>
                     <path d="M10 15 L28 3"/>
@@ -657,13 +692,13 @@ video {
                 <span>10</span>
             </button>
 
-            <button class="play" onclick="togglePlay()">
+            <button class="play" onclick="togglePlay()" tabindex="0" aria-label="Reproduzir ou pausar">
                 <svg viewBox="0 0 60 70" fill="white" id="playIcon">
                     <path d="M15 10 H25 V60 H15 Z M35 10 H45 V60 H35 Z"/>
                 </svg>
             </button>
 
-            <button class="skip" onclick="seek(10)">
+            <button class="skip" onclick="seek(10)" tabindex="0" aria-label="Avançar 10 segundos">
                 <svg viewBox="0 0 80 80" fill="none" stroke="white" stroke-width="3">
                     <path d="M55 15 L70 15 L70 30"/>
                     <path d="M70 15 L52 3"/>
@@ -675,7 +710,7 @@ video {
 
         <div class="bottom">
             <div class="progress-area">
-                <div class="progress-wrapper" id="progressWrapper">
+                <div class="progress-wrapper" id="progressWrapper" tabindex="0" role="slider" aria-label="Progresso do vídeo">
                     <div class="progress-tooltip" id="progressTooltip">0:00</div>
                     <div class="progress" id="progress">
                         <div class="progress-fill" id="progressFill">
@@ -687,21 +722,21 @@ video {
             </div>
 
             <div class="menu">
-                <button onclick="togglePlaylist()">
+                <button onclick="togglePlaylist()" tabindex="0">
                     <svg viewBox="0 0 24 24">
                         <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/>
                     </svg>
                     <span>Canais</span>
                 </button>
 
-                <button onclick="showSubtitles()">
+                <button onclick="showSubtitles()" tabindex="0">
                     <svg viewBox="0 0 24 24">
                         <path d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h3v-4l4 4h9c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 8h10v2H7V8zm6 5H7v-2h6v2zm5 0h-3v-2h3v2z"/>
                     </svg>
                     <span>Áudio e Legendas</span>
                 </button>
 
-                <button onclick="nextEpisode()">
+                <button onclick="nextEpisode()" tabindex="0">
                     <svg viewBox="0 0 24 24">
                         <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/>
                     </svg>
@@ -715,15 +750,15 @@ video {
     <div class="playlist-panel" id="playlistPanel">
         <div class="playlist-header">
             <div class="playlist-header-left">
-                <button class="back-btn" id="playlistBackBtn" onclick="showGroups()">&#8592;</button>
+                <button class="back-btn" id="playlistBackBtn" onclick="showGroups()" tabindex="0">&#8592;</button>
                 <h2 id="playlistTitle">Categorias</h2>
             </div>
-            <button class="close-btn" onclick="togglePlaylist()">&times;</button>
+            <button class="close-btn" onclick="togglePlaylist()" tabindex="0" aria-label="Fechar canais">&times;</button>
         </div>
         <div class="playlist-body" id="playlistBody">
             <div class="playlist-loading">Carregando...</div>
         </div>
-        <button class="btn-config" onclick="openSetup()">Alterar Lista IPTV</button>
+        <button class="btn-config" onclick="openSetup()" tabindex="0">Alterar Lista IPTV</button>
     </div>
 
     <div class="side-arrow">
@@ -952,6 +987,7 @@ function showControls() {
 }
 player.addEventListener('pointermove', showControls);
 player.addEventListener('touchstart', showControls, { passive: true });
+player.addEventListener('click', showControls);
 
 /* =================================
    MENU / PAINEL PLAYLIST
@@ -1041,6 +1077,8 @@ function renderGroups() {
         const count = groupsData[groupName].length;
         const div = document.createElement('div');
         div.className = 'group-item';
+        div.tabIndex = 0;
+        div.setAttribute('role', 'button');
         
         div.innerHTML = `
             <div style="display:flex; align-items:center; gap:10px;">
@@ -1050,6 +1088,7 @@ function renderGroups() {
             <span class="arrow">&#8250;</span>
         `;
         div.onclick = () => showLives(groupName);
+        div.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showLives(groupName); } };
         playlistBody.appendChild(div);
     });
 }
@@ -1066,6 +1105,8 @@ function renderLives(groupName) {
     lives.forEach((item, index) => {
         const div = document.createElement('div');
         div.className = 'playlist-item';
+        div.tabIndex = 0;
+        div.setAttribute('role', 'button');
         div.dataset.index = index;
         
         if (item.logo && item.logo.trim() !== '') {
@@ -1087,6 +1128,7 @@ function renderLives(groupName) {
         div.appendChild(info);
 
         div.onclick = () => playPlaylistItem(groupName, index);
+        div.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playPlaylistItem(groupName, index); } };
         playlistBody.appendChild(div);
     });
 }
@@ -1136,6 +1178,216 @@ function goBack() {
 }
 
 player.addEventListener('dblclick', fullscreen);
+
+
+/* =================================
+   CONTROLE REMOTO SAMSUNG / TECLADO
+================================= */
+(function initTvInput() {
+    const isTextInput = (el) => el && (
+        el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' ||
+        el.isContentEditable
+    );
+
+    // Registra teclas de mídia do controle Samsung quando a API estiver disponível.
+    try {
+        const tvKeys = [
+            'MediaPlay', 'MediaPause', 'MediaPlayPause', 'MediaStop',
+            'MediaFastForward', 'MediaRewind', 'ChannelUp', 'ChannelDown'
+        ];
+        if (window.tizen && tizen.tvinputdevice &&
+            typeof tizen.tvinputdevice.registerKey === 'function') {
+            tvKeys.forEach(key => {
+                try { tizen.tvinputdevice.registerKey(key); } catch (_) {}
+            });
+        }
+    } catch (_) {}
+
+    function getFocusable() {
+        const panelOpen = playlistPanel.classList.contains('open');
+        const root = panelOpen ? playlistPanel : document;
+        return Array.from(root.querySelectorAll(
+            'button:not(:disabled), input:not(:disabled), ' +
+            '.group-item, .playlist-item, .progress-wrapper'
+        )).filter(el => {
+            const style = getComputedStyle(el);
+            return style.display !== 'none' &&
+                   style.visibility !== 'hidden' &&
+                   el.getClientRects().length > 0 &&
+                   !el.classList.contains('hidden');
+        });
+    }
+
+    function focusFirst() {
+        const list = getFocusable();
+        if (list.length) list[0].focus();
+    }
+
+    function moveFocus(direction) {
+        const items = getFocusable();
+        if (!items.length) return;
+        const current = document.activeElement;
+        if (!items.includes(current)) {
+            focusFirst();
+            return;
+        }
+
+        const a = current.getBoundingClientRect();
+        const ax = a.left + a.width / 2;
+        const ay = a.top + a.height / 2;
+        let best = null;
+        let bestScore = Infinity;
+
+        for (const el of items) {
+            if (el === current) continue;
+            const r = el.getBoundingClientRect();
+            const bx = r.left + r.width / 2;
+            const by = r.top + r.height / 2;
+            const dx = bx - ax;
+            const dy = by - ay;
+
+            let primary, secondary;
+            if (direction === 'left') {
+                if (dx >= -1) continue;
+                primary = -dx; secondary = Math.abs(dy);
+            } else if (direction === 'right') {
+                if (dx <= 1) continue;
+                primary = dx; secondary = Math.abs(dy);
+            } else if (direction === 'up') {
+                if (dy >= -1) continue;
+                primary = -dy; secondary = Math.abs(dx);
+            } else {
+                if (dy <= 1) continue;
+                primary = dy; secondary = Math.abs(dx);
+            }
+
+            // Prioriza itens na mesma linha/coluna, mas permite navegação diagonal.
+            const score = primary + secondary * 1.7;
+            if (score < bestScore) {
+                bestScore = score;
+                best = el;
+            }
+        }
+
+        if (best) {
+            best.focus();
+            if (best.classList.contains('group-item') ||
+                best.classList.contains('playlist-item')) {
+                best.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+            }
+        }
+    }
+
+    function handleBack() {
+        if (playlistPanel.classList.contains('open')) {
+            playlistPanel.classList.remove('open');
+            showControls();
+            return true;
+        }
+        if (!setupScreen.classList.contains('hidden') &&
+            currentPlaylistUrl) {
+            setupScreen.classList.add('hidden');
+            return true;
+        }
+        if (overlay.classList.contains('hidden')) {
+            showControls();
+            return true;
+        }
+        return false;
+    }
+
+    document.addEventListener('keydown', function(e) {
+        const key = e.key;
+        const code = e.keyCode;
+        const target = e.target;
+
+        // Campo de URL: mantém navegação normal de cursor/teclado.
+        if (isTextInput(target)) {
+            if (key === 'Escape' || key === 'Backspace' && target.value === '') {
+                target.blur();
+                e.preventDefault();
+            }
+            return;
+        }
+
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
+            e.preventDefault();
+            showControls();
+            moveFocus(key.replace('Arrow', '').toLowerCase());
+            return;
+        }
+
+        if (key === 'Enter' || key === ' ') {
+            if (target && target.classList &&
+                (target.classList.contains('group-item') ||
+                 target.classList.contains('playlist-item'))) {
+                e.preventDefault();
+                target.click();
+            }
+            return;
+        }
+
+        // Voltar: controles Samsung, Escape e Backspace.
+        if (key === 'Escape' || key === 'Backspace' ||
+            key === 'BrowserBack' || code === 10009) {
+            if (handleBack()) e.preventDefault();
+            return;
+        }
+
+        // Teclas de mídia de controles remotos e teclados.
+        if (key === 'MediaPlayPause' || key === 'PlayPause' || code === 179) {
+            e.preventDefault(); togglePlay(); showControls(); return;
+        }
+        if (key === 'MediaPlay' || key === 'Play' || code === 415) {
+            e.preventDefault(); video.play().catch(() => {}); showControls(); return;
+        }
+        if (key === 'MediaPause' || key === 'Pause' || code === 19) {
+            e.preventDefault(); video.pause(); showControls(); return;
+        }
+        if (key === 'MediaStop' || key === 'Stop' || code === 413) {
+            e.preventDefault(); video.pause(); video.currentTime = 0; showControls(); return;
+        }
+        if (key === 'MediaFastForward' || key === 'FastForward' || code === 417) {
+            e.preventDefault(); seek(10); showControls(); return;
+        }
+        if (key === 'MediaRewind' || key === 'Rewind' || code === 412) {
+            e.preventDefault(); seek(-10); showControls(); return;
+        }
+        if (key === 'ChannelUp' || code === 427) {
+            e.preventDefault(); nextEpisode(); showControls(); return;
+        }
+        if (key === 'ChannelDown' || code === 428) {
+            e.preventDefault();
+            const active = playlistBody.querySelector('.playlist-item.active');
+            if (currentView === 'lives' && currentGroup) {
+                const items = groupsData[currentGroup] || [];
+                if (items.length) {
+                    const idx = active ? (parseInt(active.dataset.index, 10) - 1 + items.length) % items.length : 0;
+                    playPlaylistItem(currentGroup, idx);
+                }
+            }
+            showControls();
+        }
+    }, true);
+
+    // Clique, mouse e toque continuam funcionando; clique posiciona o foco.
+    document.addEventListener('click', function(e) {
+        const el = e.target.closest('button, input, .group-item, .playlist-item, .progress-wrapper');
+        if (el && typeof el.focus === 'function') el.focus({ preventScroll: true });
+    }, true);
+
+    // Inicia foco no primeiro controle disponível quando a tela estiver pronta.
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            if (!setupScreen.classList.contains('hidden')) {
+                playlistInput.focus();
+            } else {
+                focusFirst();
+            }
+        }, 250);
+    });
+})();
+
 
 /* START */
 init();
